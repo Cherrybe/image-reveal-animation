@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GSAP Image Reveal Demo
+
+A scroll-driven image reveal animation built with Next.js, React, Tailwind CSS, and GSAP ScrollTrigger.
+
+The demo starts with a large center image ("mother") and progressively reveals surrounding images ("children") as the user scrolls.
+
+## Tech Stack
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- GSAP + ScrollTrigger
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Available Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` — Start development server
+- `npm run build` — Build production bundle
+- `npm run start` — Run production server
+- `npm run lint` — Run ESLint
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+- `app/page.tsx` — Main page entry
+- `components/ImageStackReveal.tsx` — Grid layout and image markup
+- `components/useImageRevealAnimation.ts` — GSAP animation + ScrollTrigger timeline
+- `public/` — Image assets (`main.jpg`, `img1.jpg` ...)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## How the Animation Works
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. `ImageStackReveal` renders a tall scroll section (`h-[300vh]`) with the image grid.
+2. `useImageRevealAnimation` registers a GSAP context scoped to the section.
+3. Initial states are set:
+	- Children start hidden (`opacity: 0`, reduced scale).
+	- Mother starts enlarged (`scale: 3`).
+4. A ScrollTrigger timeline (with `scrub` + `pin`) animates:
+	- Mother shrinking into place.
+	- Children fading/scaling in with stagger.
 
-## Deploy on Vercel
+## Customization
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Change image layout in `components/ImageStackReveal.tsx`.
+- Adjust timing and feel in `components/useImageRevealAnimation.ts`:
+  - `end` for scroll distance
+  - `stagger` for reveal pacing
+  - `scale` values for zoom intensity
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Notes
+
+- Ensure all referenced images exist in `public/`.
+- This demo uses standard `<img>` tags; you can switch to `next/image` if you want image optimization behavior.
