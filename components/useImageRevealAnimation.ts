@@ -55,8 +55,8 @@ export function useImageRevealAnimation(
         {
           opacity: 1,
           scale: 1,
-          stagger: 0.05,
           ease: "none",
+          duration: 0.5,
         },
         "<",
       );
